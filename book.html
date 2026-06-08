@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="הספר של ליאור יצחק – נמכר בסטימצקי.">
+  <title>הספר שלי | ליאור יצחק</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">דלג לתוכן הראשי</a>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a class="logo-link" href="index.html">
+        <img src="assets/lior-logo.svg" alt="ליאור יצחק – חזרה לדף הבית" width="120" height="120" class="logo-image">
+        <span class="logo-text">ליאור יצחק</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="פתח או סגור את תפריט הניווט">
+        <span class="nav-toggle-bar" aria-hidden="true"></span><span class="nav-toggle-bar" aria-hidden="true"></span><span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-text">תפריט</span>
+      </button>
+      <nav id="main-nav" class="main-nav" aria-label="ניווט ראשי">
+        <ul class="nav-list">
+          <li><a href="index.html">בית</a></li>
+          <li class="nav-has-submenu">
+            <button type="button" class="submenu-toggle" aria-expanded="false" aria-controls="works-submenu">העבודות שלי<span class="sr-only"> – תפריט משנה</span></button>
+            <ul id="works-submenu" class="submenu" hidden>
+              <li><a href="portfolio.html">תיק עבודות</a></li>
+              <li><a href="campaigns.html">מהלכים</a></li>
+              <li><a href="scripts.html">תסריטים</a></li>
+              <li><a href="book.html" aria-current="page">הספר שלי</a></li>
+              <li><a href="social.html">הסושיאל שלי</a></li>
+              <li><a href="articles.html">הכתבות שלי</a></li>
+            </ul>
+          </li>
+          <li><a href="cv.html">קורות חיים</a></li>
+          <li><a href="contact.html">דברו איתי</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content" class="site-main" tabindex="-1">
+    <header class="page-header">
+      <h1>הספר שלי</h1>
+      <p class="page-intro">ספר שכתבתי ונמכר בסטימצקי. כאן אפשר להוסיף שם הספר, תקציר וקישור לרכישה.</p>
+    </header>
+    <article class="work-item" aria-labelledby="book-title">
+      <h2 id="book-title">שם הספר – יתווסף</h2>
+      <p class="work-meta">הוצאה · שנה · ז'אנר</p>
+      <p>תקציר קצר על הספר. טקסט ברור ומובנה עוזר לקוראי מסך להבין את התוכן בלי לנחש.</p>
+      <p><a href="#" aria-describedby="book-buy-note">קישור לרכישה<span class="sr-only"> – יתווסף</span></a></p>
+      <p id="book-buy-note" class="work-meta">הקישור יוביל לדף רכישה חיצוני.</p>
+    </article>
+  </main>
+  <footer class="site-footer" role="contentinfo">
+    <p class="copyright">© <span id="year"></span> ליאור יצחק</p>
+  </footer>
+  <script src="main.js"></script>
+</body>
+</html>

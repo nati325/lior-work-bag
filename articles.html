@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="כתבות ופרסומים של ליאור יצחק.">
+  <title>הכתבות שלי | ליאור יצחק</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">דלג לתוכן הראשי</a>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a class="logo-link" href="index.html">
+        <img src="assets/lior-logo.svg" alt="ליאור יצחק – חזרה לדף הבית" width="120" height="120" class="logo-image">
+        <span class="logo-text">ליאור יצחק</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="פתח או סגור את תפריט הניווט">
+        <span class="nav-toggle-bar" aria-hidden="true"></span><span class="nav-toggle-bar" aria-hidden="true"></span><span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-text">תפריט</span>
+      </button>
+      <nav id="main-nav" class="main-nav" aria-label="ניווט ראשי">
+        <ul class="nav-list">
+          <li><a href="index.html">בית</a></li>
+          <li class="nav-has-submenu">
+            <button type="button" class="submenu-toggle" aria-expanded="false" aria-controls="works-submenu">העבודות שלי<span class="sr-only"> – תפריט משנה</span></button>
+            <ul id="works-submenu" class="submenu" hidden>
+              <li><a href="portfolio.html">תיק עבודות</a></li>
+              <li><a href="campaigns.html">מהלכים</a></li>
+              <li><a href="scripts.html">תסריטים</a></li>
+              <li><a href="book.html">הספר שלי</a></li>
+              <li><a href="social.html">הסושיאל שלי</a></li>
+              <li><a href="articles.html" aria-current="page">הכתבות שלי</a></li>
+            </ul>
+          </li>
+          <li><a href="cv.html">קורות חיים</a></li>
+          <li><a href="contact.html">דברו איתי</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content" class="site-main" tabindex="-1">
+    <header class="page-header">
+      <h1>הכתבות שלי</h1>
+      <p class="page-intro">כתבות ופרסומים – כל פריט עם כותרת, מקור, תאריך וקישור לקריאה.</p>
+    </header>
+    <ol class="work-list" aria-label="רשימת כתבות">
+      <li class="work-item">
+        <article aria-labelledby="article-1-title">
+          <h2 id="article-1-title">כותרת הכתבה – דוגמה</h2>
+          <p class="work-meta">מקור: שם העיתון · תאריך: 2024</p>
+          <p>תקציר קצר של הכתבה.</p>
+          <p><a href="#">קרא את הכתב<span class="sr-only"> – נפתח בחלון חדש</span></a></p>
+        </article>
+      </li>
+    </ol>
+  </main>
+  <footer class="site-footer" role="contentinfo">
+    <p class="copyright">© <span id="year"></span> ליאור יצחק</p>
+  </footer>
+  <script src="main.js"></script>
+</body>
+</html>
