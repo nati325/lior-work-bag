@@ -35,7 +35,8 @@
       video.controls = true;
       video.preload = "metadata";
       video.setAttribute("playsinline", "");
-      video.setAttribute("aria-label", item.label + " – לחצו על כפתור ההפעלה כדי לצפות");
+      video.className = "carousel-zoomable";
+      video.setAttribute("aria-label", item.label + " – לחצו להגדלה או על כפתור ההפעלה כדי לצפות");
       video.src = src;
       return video;
     }
@@ -45,7 +46,138 @@
     img.alt = item.label;
     img.loading = "lazy";
     img.decoding = "async";
+    img.className = "carousel-zoomable";
+    img.setAttribute("role", "button");
+    img.tabIndex = 0;
+    img.setAttribute("aria-label", "הגדל תמונה: " + item.label);
     return img;
+  }
+
+  var MediaLightbox = {
+    dialog: null,
+    content: null,
+    caption: null,
+    lastFocus: null,
+
+    ensure: function () {
+      if (this.dialog) {
+        return;
+      }
+
+      var self = this;
+      var dialog = document.createElement("dialog");
+      dialog.className = "media-lightbox";
+      dialog.setAttribute("aria-label", "תצוגה מוגדלת");
+
+      dialog.innerHTML =
+        "<div class=\"media-lightbox-inner\">" +
+        "<button type=\"button\" class=\"media-lightbox-close\" aria-label=\"סגור\">" +
+        "<svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\">" +
+        "<path d=\"M6 6l12 12M18 6L6 18\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/>" +
+        "</svg></button>" +
+        "<div class=\"media-lightbox-content\"></div>" +
+        "<p class=\"media-lightbox-caption\"></p>" +
+        "</div>";
+
+      document.body.appendChild(dialog);
+
+      this.dialog = dialog;
+      this.content = dialog.querySelector(".media-lightbox-content");
+      this.caption = dialog.querySelector(".media-lightbox-caption");
+
+      dialog.querySelector(".media-lightbox-close").addEventListener("click", function () {
+        self.close();
+      });
+
+      dialog.addEventListener("click", function (event) {
+        if (event.target === dialog) {
+          self.close();
+        }
+      });
+
+      dialog.addEventListener("cancel", function (event) {
+        event.preventDefault();
+        self.close();
+      });
+    },
+
+    open: function (item, trigger) {
+      this.ensure();
+      this.lastFocus = trigger || document.activeElement;
+      this.content.innerHTML = "";
+
+      var src = encodePath(item.file);
+
+      if (item.type === "video") {
+        var video = document.createElement("video");
+        video.controls = true;
+        video.autoplay = true;
+        video.preload = "auto";
+        video.setAttribute("playsinline", "");
+        video.className = "media-lightbox-media";
+        video.setAttribute("aria-label", item.label);
+        video.src = src;
+        this.content.appendChild(video);
+      } else {
+        var img = document.createElement("img");
+        img.src = src;
+        img.alt = item.label;
+        img.className = "media-lightbox-media";
+        img.decoding = "async";
+        this.content.appendChild(img);
+      }
+
+      this.caption.textContent = item.label;
+      this.dialog.showModal();
+      this.dialog.querySelector(".media-lightbox-close").focus();
+    },
+
+    close: function () {
+      if (!this.dialog || !this.dialog.open) {
+        return;
+      }
+
+      var video = this.content.querySelector("video");
+      if (video) {
+        video.pause();
+      }
+
+      this.dialog.close();
+      this.content.innerHTML = "";
+
+      if (this.lastFocus && typeof this.lastFocus.focus === "function") {
+        this.lastFocus.focus();
+      }
+    }
+  };
+
+  function bindMediaZoom(element, item) {
+    function openLightbox(event) {
+      if (event.type === "keydown" && event.key !== "Enter" && event.key !== " ") {
+        return;
+      }
+
+      if (element.tagName === "VIDEO") {
+        var rect = element.getBoundingClientRect();
+        var controlsZone = 52;
+
+        if (event.clientY > rect.bottom - controlsZone) {
+          return;
+        }
+      }
+
+      if (event.type === "keydown") {
+        event.preventDefault();
+      }
+
+      MediaLightbox.open(item, element);
+    }
+
+    element.addEventListener("click", openLightbox);
+
+    if (element.tagName === "IMG") {
+      element.addEventListener("keydown", openLightbox);
+    }
   }
 
   function AccessibleCarousel(container, options) {
@@ -116,7 +248,9 @@
       badge.className = "carousel-badge";
       badge.textContent = item.type === "video" ? "סרטון" : "תמונה";
       mediaWrap.appendChild(badge);
-      mediaWrap.appendChild(createMediaElement(item));
+      var mediaEl = createMediaElement(item);
+      bindMediaZoom(mediaEl, item);
+      mediaWrap.appendChild(mediaEl);
       slide.appendChild(mediaWrap);
       viewport.appendChild(slide);
       return slide;
