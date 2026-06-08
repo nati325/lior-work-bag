@@ -41,6 +41,8 @@ html {
   scroll-padding-top: calc(var(--nav-height) + 0.75rem);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -58,13 +60,24 @@ html {
 
 body {
   margin: 0;
-  font-family: var(--font);
-  font-size: 1.0625rem;
-  line-height: 1.7;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: var(--leading-body);
   color: var(--ink);
   background: var(--cream);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+.stats-bar strong,
+.carousel-caption {
+  font-family: var(--font-display);
+  font-feature-settings: "kern" 1;
 }
 
 .sr-only {
