@@ -173,7 +173,7 @@
 
     this.viewport.addEventListener("touchend", function (event) {
       var diff = event.changedTouches[0].screenX - self.touchStartX;
-      if (Math.abs(diff) < 50) {
+      if (Math.abs(diff) < 35) {
         return;
       }
       self.go(diff > 0 ? -1 : 1);
