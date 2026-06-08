@@ -60,6 +60,18 @@
     this.showSlide(0);
   }
 
+  function carouselArrowIcon(direction) {
+    var path = direction === "next"
+      ? "M14 6l-6 6 6 6"
+      : "M10 6l6 6-6 6";
+
+    return (
+      "<svg class=\"carousel-arrow-icon\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\">" +
+      "<path d=\"" + path + "\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>" +
+      "</svg>"
+    );
+  }
+
   AccessibleCarousel.prototype.build = function () {
     var self = this;
 
@@ -76,7 +88,7 @@
     this.prevBtn.type = "button";
     this.prevBtn.className = "carousel-arrow carousel-arrow-prev";
     this.prevBtn.setAttribute("aria-label", "הקודם");
-    this.prevBtn.innerHTML = "<span class=\"carousel-arrow-icon\" aria-hidden=\"true\">&#8594;</span>";
+    this.prevBtn.innerHTML = carouselArrowIcon("prev");
 
     var viewport = document.createElement("div");
     viewport.className = "carousel-viewport";
@@ -87,7 +99,7 @@
     this.nextBtn.type = "button";
     this.nextBtn.className = "carousel-arrow carousel-arrow-next";
     this.nextBtn.setAttribute("aria-label", "הבא");
-    this.nextBtn.innerHTML = "<span class=\"carousel-arrow-icon\" aria-hidden=\"true\">&#8592;</span>";
+    this.nextBtn.innerHTML = carouselArrowIcon("next");
 
     this.slides = this.items.map(function (item, index) {
       var slide = document.createElement("div");
