@@ -76,7 +76,7 @@
     this.prevBtn.type = "button";
     this.prevBtn.className = "carousel-arrow carousel-arrow-prev";
     this.prevBtn.setAttribute("aria-label", "הקודם");
-    this.prevBtn.innerHTML = "<span class=\"arrow-label\">הקודם</span>";
+    this.prevBtn.innerHTML = "<span class=\"carousel-arrow-icon\" aria-hidden=\"true\">&#8594;</span>";
 
     var viewport = document.createElement("div");
     viewport.className = "carousel-viewport";
@@ -87,7 +87,7 @@
     this.nextBtn.type = "button";
     this.nextBtn.className = "carousel-arrow carousel-arrow-next";
     this.nextBtn.setAttribute("aria-label", "הבא");
-    this.nextBtn.innerHTML = "<span class=\"arrow-label\">הבא</span>";
+    this.nextBtn.innerHTML = "<span class=\"carousel-arrow-icon\" aria-hidden=\"true\">&#8592;</span>";
 
     this.slides = this.items.map(function (item, index) {
       var slide = document.createElement("div");
