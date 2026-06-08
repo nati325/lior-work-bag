@@ -122,32 +122,12 @@ a {
 .site-nav-inner {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 0.65rem 1.15rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  padding: 0.5rem 1.15rem;
   min-height: var(--nav-height);
 }
 
-.site-nav-brand {
-  flex-shrink: 0;
-  text-decoration: none;
-  color: #f8f4ee;
-  font-size: 1.05rem;
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  padding: 0.35rem 0;
-  transition: color 0.2s ease;
-}
-
-.site-nav-brand:hover {
-  color: var(--accent-light);
-}
-
 .site-nav-pill {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
   padding: 0.28rem;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -681,29 +661,21 @@ a {
 
 @media (max-width: 640px) {
   :root {
-    --nav-height: 5.5rem;
+    --nav-height: 3.35rem;
   }
 
   .site-nav-inner {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.55rem;
-    padding: 0.65rem max(0.85rem, env(safe-area-inset-left)) 0.7rem max(0.85rem, env(safe-area-inset-right));
-  }
-
-  .site-nav-brand {
-    text-align: center;
-    font-size: 1rem;
+    padding: 0.4rem max(0.75rem, env(safe-area-inset-left)) 0.45rem max(0.75rem, env(safe-area-inset-right));
   }
 
   .site-nav-pill {
-    padding: 0.22rem;
+    padding: 0.18rem;
   }
 
   .site-nav-list a {
-    min-height: 2.65rem;
-    padding: 0.4rem 0.35rem;
-    font-size: 0.84rem;
+    min-height: 2.35rem;
+    padding: 0.35rem 0.3rem;
+    font-size: 0.82rem;
   }
 
   body {
@@ -910,11 +882,7 @@ a {
 
 @media (min-width: 768px) {
   .site-nav-inner {
-    padding: 0.7rem 2rem;
-  }
-
-  .site-nav-brand {
-    font-size: 1.15rem;
+    padding: 0.55rem 2rem;
   }
 
   .site-nav-list a {
