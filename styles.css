@@ -23,6 +23,7 @@
   --shadow-lg: 0 32px 64px rgba(0, 0, 0, 0.18);
   --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.1);
   --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --nav-height: 3.5rem;
 }
 
 *,
@@ -33,6 +34,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-height) + 0.75rem);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -103,6 +105,63 @@ a {
 
 .site-main {
   overflow: hidden;
+}
+
+/* ========== NAV ========== */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: rgba(247, 243, 236, 0.94);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  padding-top: env(safe-area-inset-top);
+}
+
+.site-nav-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.site-nav-list {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0.45rem 0;
+  list-style: none;
+  min-height: var(--nav-height);
+  align-items: center;
+}
+
+.site-nav-list a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.site-nav-list a:hover {
+  background: rgba(232, 98, 26, 0.12);
+  color: var(--accent-dark);
+}
+
+.site-nav-list a:focus-visible {
+  background: rgba(232, 98, 26, 0.12);
+}
+
+#companies-section,
+#social-section,
+#contact-section {
+  scroll-margin-top: calc(var(--nav-height) + 0.75rem);
 }
 
 /* ========== OPENING ========== */
@@ -579,6 +638,25 @@ a {
 }
 
 @media (max-width: 640px) {
+  :root {
+    --nav-height: 3.25rem;
+  }
+
+  .site-nav-inner {
+    padding: 0 0.5rem;
+  }
+
+  .site-nav-list {
+    gap: 0.15rem;
+  }
+
+  .site-nav-list a {
+    flex: 1;
+    min-height: 2.6rem;
+    padding: 0.45rem 0.35rem;
+    font-size: 0.88rem;
+  }
+
   body {
     font-size: 1.125rem;
     line-height: 1.8;
