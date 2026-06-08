@@ -251,9 +251,65 @@
     }
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initCarousels);
-  } else {
+  function initNavHighlight() {
+    var navLinks = document.querySelectorAll(".site-nav-list a[data-section]");
+    if (!navLinks.length) {
+      return;
+    }
+
+    var sections = [];
+    navLinks.forEach(function (link) {
+      var section = document.getElementById(link.getAttribute("data-section"));
+      if (section) {
+        sections.push({ id: section.id, link: link });
+      }
+    });
+
+    if (!sections.length) {
+      return;
+    }
+
+    function setActive(id) {
+      navLinks.forEach(function (link) {
+        var isActive = link.getAttribute("data-section") === id;
+        link.classList.toggle("is-active", isActive);
+        if (isActive) {
+          link.setAttribute("aria-current", "true");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    }
+
+    if ("IntersectionObserver" in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return b.intersectionRatio - a.intersectionRatio; });
+
+        if (visible.length > 0) {
+          setActive(visible[0].target.id);
+        }
+      }, {
+        root: null,
+        rootMargin: "-45% 0px -45% 0px",
+        threshold: [0, 0.25, 0.5, 0.75, 1]
+      });
+
+      sections.forEach(function (item) {
+        observer.observe(document.getElementById(item.id));
+      });
+    }
+  }
+
+  function init() {
     initCarousels();
+    initNavHighlight();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
   }
 })();
