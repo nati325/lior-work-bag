@@ -1,24 +1,24 @@
-# הפעלת GitHub Pages – חובה פעם אחת
+# הפעלת GitHub Pages
 
-הקוד כבר ב-GitHub. כדי שהאתר יעלה, צריך **שלב אחד ידני** (אי אפשר לעשות את זה מהמחשב בלי הרשאות):
+## שלב 1 – הרץ את ה-deploy
 
-## שלבים
+1. פתח: https://github.com/nati325/lior-work-bag/actions
+2. לחץ **Deploy to GitHub Pages** → **Run workflow** → **Run workflow**
+3. המתן עד שיש ✅ ירוק (יצירת branch בשם `gh-pages`)
 
-1. היכנס ל-GitHub ופתח:  
-   **https://github.com/nati325/lior-work-bag/settings/pages**
+## שלב 2 – הפעל Pages (פעם אחת)
 
-2. תחת **Build and deployment** → **Source**  
-   בחר: **GitHub Actions** (לא "Deploy from a branch")
+1. פתח: https://github.com/nati325/lior-work-bag/settings/pages
+2. תחת **Build and deployment** → **Source** בחר: **Deploy from a branch**
+3. **Branch:** `gh-pages` | **Folder:** `/ (root)`
+4. לחץ **Save**
 
-3. לך ל-**Actions**:  
-   **https://github.com/nati325/lior-work-bag/actions**
+## שלב 3 – בדיקה
 
-4. לחץ על **Deploy to GitHub Pages** → **Run workflow** → **Run workflow**
-
-5. המתן 2–3 דקות
-
-## כתובת האתר
+המתן 2–3 דקות, ואז פתח:
 
 **https://nati325.github.io/lior-work-bag/**
 
-אם עדיין 404 – שלח צילום מסך מ-Settings → Pages.
+---
+
+**חשוב:** השתמש ב-repo **lior-work-bag** (לא lior הישן).
