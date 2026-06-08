@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="יצירת קשר עם ליאור יצחק – טלפון, אימייל, WhatsApp ורשתות חברתיות.">
+  <title>דברו איתי | ליאור יצחק</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">דלג לתוכן הראשי</a>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a class="logo-link" href="index.html">
+        <img src="assets/lior-logo.svg" alt="ליאור יצחק – חזרה לדף הבית" width="120" height="120" class="logo-image">
+        <span class="logo-text">ליאור יצחק</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="פתח או סגור את תפריט הניווט">
+        <span class="nav-toggle-bar" aria-hidden="true"></span><span class="nav-toggle-bar" aria-hidden="true"></span><span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-text">תפריט</span>
+      </button>
+      <nav id="main-nav" class="main-nav" aria-label="ניווט ראשי">
+        <ul class="nav-list">
+          <li><a href="index.html">בית</a></li>
+          <li class="nav-has-submenu">
+            <button type="button" class="submenu-toggle" aria-expanded="false" aria-controls="works-submenu">העבודות שלי<span class="sr-only"> – תפריט משנה</span></button>
+            <ul id="works-submenu" class="submenu" hidden>
+              <li><a href="portfolio.html">תיק עבודות</a></li>
+              <li><a href="campaigns.html">מהלכים</a></li>
+              <li><a href="scripts.html">תסריטים</a></li>
+              <li><a href="book.html">הספר שלי</a></li>
+              <li><a href="social.html">הסושיאל שלי</a></li>
+              <li><a href="articles.html">הכתבות שלי</a></li>
+            </ul>
+          </li>
+          <li><a href="cv.html">קורות חיים</a></li>
+          <li><a href="contact.html" aria-current="page">דברו איתי</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content" class="site-main" tabindex="-1">
+    <header class="page-header">
+      <h1>דברו איתי</h1>
+      <p class="page-intro">כל הדרכים ליצור איתי קשר תעסוקתי. כל קישור מסומן בבירור עם סוג ההתקשרות.</p>
+    </header>
+
+    <ul class="contact-methods" aria-label="אמצעי יצירת קשר">
+      <li>
+        <h2 class="sr-only">טלפון</h2>
+        <h3>טלפון</h3>
+        <p><a href="tel:+972526856445">052-6856445</a></p>
+        <p class="work-meta">לחיצה תפתח את אפליקציית הטלפון במכשיר נייד.</p>
+      </li>
+      <li>
+        <h2 class="sr-only">אימייל</h2>
+        <h3>אימייל</h3>
+        <p><a href="mailto:lior.itzhak94@gmail.com">lior.itzhak94@gmail.com</a></p>
+        <p class="work-meta">לחיצה תפתח תוכנת דואר לשליחת הודעה.</p>
+      </li>
+      <li>
+        <h2 class="sr-only">WhatsApp</h2>
+        <h3>WhatsApp</h3>
+        <p>
+          <a href="https://wa.me/972526856445" rel="noopener noreferrer">
+            שלח הודעה ב-WhatsApp
+            <span class="sr-only"> – נפתח בחלון חדש</span>
+          </a>
+        </p>
+      </li>
+    </ul>
+
+    <section aria-labelledby="social-contact-heading">
+      <h2 id="social-contact-heading">רשתות חברתיות</h2>
+      <ul class="social-list">
+        <li><a href="https://www.facebook.com/" rel="noopener noreferrer">Facebook<span class="sr-only"> – נפתח בחלון חדש</span></a></li>
+        <li><a href="https://www.instagram.com/" rel="noopener noreferrer">Instagram<span class="sr-only"> – נפתח בחלון חדש</span></a></li>
+        <li><a href="https://www.tiktok.com/" rel="noopener noreferrer">TikTok<span class="sr-only"> – נפתח בחלון חדש</span></a></li>
+      </ul>
+    </section>
+
+    <p class="humor-note">(בשביל דברים אחרים דברו איתי בטינדר)</p>
+  </main>
+  <footer class="site-footer" role="contentinfo">
+    <p class="copyright">© <span id="year"></span> ליאור יצחק</p>
+  </footer>
+  <script src="main.js"></script>
+</body>
+</html>
