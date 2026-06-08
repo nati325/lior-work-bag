@@ -649,21 +649,18 @@ a {
     font-size: 1.65rem;
   }
 
-  /* קרוסלה – מדיה למעלה, כפתורים גדולים למטה */
+  /* קרוסלה – חצים בצדדים */
   .carousel-frame {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
+    position: relative;
   }
 
   .carousel-viewport {
-    grid-column: 1 / -1;
     min-height: auto;
   }
 
   .carousel-media {
     min-height: auto;
-    padding: 0;
+    padding: 0 2.6rem;
   }
 
   .carousel-slide img,
@@ -675,35 +672,38 @@ a {
 
   .carousel-badge {
     top: 0.5rem;
-    right: 0.5rem;
+    right: 2.6rem;
     font-size: 0.85rem;
     padding: 0.4rem 0.8rem;
   }
 
   .carousel-arrow {
-    position: static;
-    transform: none;
-    width: 100%;
-    height: 2.75rem;
-    min-height: 2.75rem;
-    min-width: 0;
-    border-radius: var(--radius-sm);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.5rem;
+    height: 2.5rem;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    border-radius: 999px;
   }
 
   .carousel-arrow-icon {
-    font-size: 1.35rem;
+    font-size: 1.2rem;
   }
 
   .carousel-arrow:hover:not(:disabled) {
-    transform: none;
+    transform: translateY(-50%) scale(1.05);
   }
 
   .carousel-arrow-prev {
-    grid-column: 1;
+    right: 0.15rem;
+    left: auto;
   }
 
   .carousel-arrow-next {
-    grid-column: 2;
+    left: 0.15rem;
+    right: auto;
   }
 
   .carousel-panel {
