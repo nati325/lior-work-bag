@@ -60,5 +60,11 @@ window.MEDIA_DATA = {
     { file: "הקבצים של ליאור/סושיאל/סושיאל ליאור ב.jpeg", type: "image", label: "סושיאל – תמונה 3" },
     { file: "הקבצים של ליאור/סושיאל/סושיאל ליאור ג.jpeg", type: "image", label: "סושיאל – תמונה 4" },
     { file: "הקבצים של ליאור/סושיאל/סושיאל ליאור ו.jpeg", type: "image", label: "סושיאל – תמונה 5" }
+  ],
+  sketches: [
+    { file: "סקיצות/קרוסלת סקיצות.jpeg", type: "image", label: "סקיצה – תמונה 1" },
+    { file: "סקיצות/קרוסלת סיקצות .jpeg", type: "image", label: "סקיצה – תמונה 2" },
+    { file: "סקיצות/קרוסלת סקיצות.mp4", type: "video", label: "סקיצה – סרטון 1" },
+    { file: "סקיצות/להוסיף לסקיצות.mp4", type: "video", label: "סקיצה – סרטון 2" }
   ]
 };

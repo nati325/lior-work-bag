@@ -378,6 +378,7 @@
 
     var companiesRoot = document.getElementById("companies-carousel");
     var socialRoot = document.getElementById("social-carousel");
+    var sketchesRoot = document.getElementById("sketches-carousel");
     var allCompanies = flattenCompanies(window.MEDIA_DATA.companies);
 
     if (companiesRoot && allCompanies.length > 0) {
@@ -392,6 +393,14 @@
       new AccessibleCarousel(socialRoot, {
         title: "סושיאל",
         items: window.MEDIA_DATA.social,
+        showCompany: false
+      });
+    }
+
+    if (sketchesRoot && window.MEDIA_DATA.sketches && window.MEDIA_DATA.sketches.length > 0) {
+      new AccessibleCarousel(sketchesRoot, {
+        title: "סקיצות",
+        items: window.MEDIA_DATA.sketches,
         showCompany: false
       });
     }
