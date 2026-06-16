@@ -398,15 +398,35 @@ a {
 .carousel-viewport {
   position: relative;
   min-height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   background: transparent;
   touch-action: pan-y pinch-zoom;
 }
 
 .carousel-slide {
   width: 100%;
+}
+
+.carousel-slide:not(.is-active) {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.carousel-slide.is-active {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
 }
 
 .carousel-slide[hidden] {
