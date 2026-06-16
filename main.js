@@ -12,14 +12,6 @@
     }).join("/");
   }
 
-  var carousels = [];
-  var AUTO_IMAGE_MS = 5500;
-  var AUTO_VIDEO_FALLBACK_MS = 8000;
-
-  function prefersReducedMotion() {
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  }
-
   function flattenCompanies(companies) {
     var flat = [];
     companies.forEach(function (company) {
@@ -143,10 +135,6 @@
     },
 
     open: function (item, trigger) {
-      carousels.forEach(function (carousel) {
-        carousel.pauseAutoplay();
-      });
-
       this.ensure();
       this.lastFocus = trigger || document.activeElement;
       this.content.innerHTML = "";
@@ -193,10 +181,6 @@
       if (this.lastFocus && typeof this.lastFocus.focus === "function") {
         this.lastFocus.focus();
       }
-
-      carousels.forEach(function (carousel) {
-        carousel.resumeAutoplay();
-      });
     }
   };
 
@@ -236,15 +220,8 @@
     this.showCompany = !!options.showCompany;
     this.currentIndex = 0;
     this.touchStartX = 0;
-    this.autoplayTimer = null;
-    this.autoplayEnabled = !prefersReducedMotion();
-    this.isVisible = false;
-    this.isPaused = false;
-    this.activeVideo = null;
-    this.onVideoEnded = null;
     this.build();
     this.bind();
-    this.setupVisibilityObserver();
     this.showSlide(0);
   }
 
@@ -385,142 +362,6 @@
     });
   };
 
-  AccessibleCarousel.prototype.setupVisibilityObserver = function () {
-    var self = this;
-
-    if (!("IntersectionObserver" in window)) {
-      this.isVisible = true;
-      return;
-    }
-
-    this.visibilityObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        self.isVisible = entry.isIntersecting && entry.intersectionRatio >= 0.35;
-
-        if (self.isVisible && !self.isPaused && self.autoplayEnabled) {
-          self.startAutoplay();
-        } else {
-          self.stopAutoplay(true);
-        }
-      });
-    }, {
-      threshold: [0, 0.35, 0.6]
-    });
-
-    this.visibilityObserver.observe(this.region);
-  };
-
-  AccessibleCarousel.prototype.clearSlideMediaHandlers = function () {
-    if (this.activeVideo && this.onVideoEnded) {
-      this.activeVideo.removeEventListener("ended", this.onVideoEnded);
-    }
-
-    this.activeVideo = null;
-    this.onVideoEnded = null;
-  };
-
-  AccessibleCarousel.prototype.stopAutoplay = function (pauseVideo) {
-    if (this.autoplayTimer) {
-      clearTimeout(this.autoplayTimer);
-      this.autoplayTimer = null;
-    }
-
-    if (pauseVideo !== false) {
-      this.pauseVideos();
-    }
-  };
-
-  AccessibleCarousel.prototype.pauseAutoplay = function () {
-    this.isPaused = true;
-    this.stopAutoplay();
-    this.resetProgressBar();
-  };
-
-  AccessibleCarousel.prototype.resumeAutoplay = function () {
-    this.isPaused = false;
-
-    if (this.isVisible && this.autoplayEnabled) {
-      this.startAutoplay();
-    }
-  };
-
-  AccessibleCarousel.prototype.resetProgressBar = function () {
-    this.progressBar.style.transition = "none";
-    this.progressBar.style.width = "0%";
-    void this.progressBar.offsetWidth;
-  };
-
-  AccessibleCarousel.prototype.animateProgressBar = function (durationMs) {
-    this.resetProgressBar();
-
-    if (prefersReducedMotion()) {
-      return;
-    }
-
-    this.progressBar.style.transition = "width " + durationMs + "ms linear";
-    this.progressBar.style.width = "100%";
-  };
-
-  AccessibleCarousel.prototype.scheduleAdvance = function (delayMs) {
-    var self = this;
-
-    this.stopAutoplay(false);
-    this.animateProgressBar(delayMs);
-
-    this.autoplayTimer = window.setTimeout(function () {
-      self.go(1, true);
-    }, delayMs);
-  };
-
-  AccessibleCarousel.prototype.startAutoplay = function () {
-    var self = this;
-
-    if (!this.autoplayEnabled || this.isPaused || !this.isVisible || this.items.length <= 1) {
-      return;
-    }
-
-    this.stopAutoplay(false);
-    this.clearSlideMediaHandlers();
-
-    var slide = this.slides[this.currentIndex];
-    var video = slide.querySelector("video");
-
-    if (video) {
-      this.activeVideo = video;
-      video.currentTime = 0;
-
-      this.onVideoEnded = function () {
-        self.go(1, true);
-      };
-
-      video.addEventListener("ended", this.onVideoEnded);
-
-      var startVideoTimer = function () {
-        var durationMs = AUTO_VIDEO_FALLBACK_MS;
-
-        if (video.duration && isFinite(video.duration)) {
-          durationMs = Math.max(Math.ceil(video.duration * 1000) + 350, 3000);
-        }
-
-        self.scheduleAdvance(durationMs);
-      };
-
-      var playAttempt = video.play();
-
-      if (playAttempt && typeof playAttempt.then === "function") {
-        playAttempt.then(startVideoTimer).catch(function () {
-          self.scheduleAdvance(AUTO_IMAGE_MS);
-        });
-      } else {
-        startVideoTimer();
-      }
-
-      return;
-    }
-
-    this.scheduleAdvance(AUTO_IMAGE_MS);
-  };
-
   AccessibleCarousel.prototype.bind = function () {
     var self = this;
 
@@ -532,39 +373,16 @@
       self.go(1);
     });
 
-    this.region.addEventListener("mouseenter", function () {
-      self.pauseAutoplay();
-    });
-
-    this.region.addEventListener("mouseleave", function () {
-      self.resumeAutoplay();
-    });
-
-    this.region.addEventListener("focusin", function () {
-      self.pauseAutoplay();
-    });
-
-    this.region.addEventListener("focusout", function (event) {
-      if (!self.region.contains(event.relatedTarget)) {
-        self.resumeAutoplay();
-      }
-    });
-
     this.viewport.addEventListener("touchstart", function (event) {
       self.touchStartX = event.changedTouches[0].screenX;
-      self.pauseAutoplay();
     }, { passive: true });
 
     this.viewport.addEventListener("touchend", function (event) {
       var diff = event.changedTouches[0].screenX - self.touchStartX;
-      if (Math.abs(diff) >= 35) {
-        self.go(diff > 0 ? -1 : 1);
+      if (Math.abs(diff) < 35) {
         return;
       }
-
-      window.setTimeout(function () {
-        self.resumeAutoplay();
-      }, AUTO_IMAGE_MS);
+      self.go(diff > 0 ? -1 : 1);
     }, { passive: true });
 
     this.viewport.addEventListener("keydown", function (event) {
@@ -599,69 +417,37 @@
     }
 
     this.statusEl.textContent = (index + 1) + " / " + total;
+    this.progressBar.style.width = ((index + 1) / total * 100) + "%";
   };
 
-  AccessibleCarousel.prototype.showSlide = function (index, options) {
-    options = options || {};
-    var fromAutoplay = !!options.fromAutoplay;
-    var manualNav = !!options.manual;
-
-    this.stopAutoplay(!fromAutoplay);
-    this.clearSlideMediaHandlers();
-    this.updateFooter(index);
+  AccessibleCarousel.prototype.showSlide = function (index) {
+    this.pauseVideos();
     this.currentIndex = index;
 
     this.slides.forEach(function (slide, i) {
       slide.classList.toggle("is-active", i === index);
     });
 
+    this.updateFooter(index);
     this.prevBtn.disabled = this.items.length <= 1;
     this.nextBtn.disabled = this.items.length <= 1;
     this.preloadNeighbors(index);
 
-    var activeSlide = this.slides[index];
-    var activeVideo = activeSlide.querySelector("video");
+    var activeVideo = this.slides[index].querySelector("video");
     if (activeVideo) {
       showVideoPosterFrame(activeVideo);
     }
-
-    if (manualNav) {
-      this.pauseVideos();
-      return;
-    }
-
-    this.resetProgressBar();
-
-    if (this.autoplayEnabled && this.isVisible && !this.isPaused) {
-      this.startAutoplay();
-    }
   };
 
-  AccessibleCarousel.prototype.go = function (direction, fromAutoplay) {
+  AccessibleCarousel.prototype.go = function (direction) {
     var total = this.items.length;
     if (total <= 1) {
       return;
     }
 
     var next = (this.currentIndex + direction + total) % total;
-
-    if (!fromAutoplay) {
-      this.isPaused = true;
-      this.stopAutoplay(false);
-      this.updateFooter(next);
-      this.showSlide(next, { manual: true });
-
-      var self = this;
-      window.setTimeout(function () {
-        self.isPaused = false;
-        if (self.isVisible && self.autoplayEnabled) {
-          self.startAutoplay();
-        }
-      }, AUTO_IMAGE_MS * 2);
-      return;
-    }
-
-    this.showSlide(next, { fromAutoplay: true });
+    this.updateFooter(next);
+    this.showSlide(next);
   };
 
   function initCarousels() {
@@ -675,27 +461,27 @@
     var allCompanies = flattenCompanies(window.MEDIA_DATA.companies);
 
     if (companiesRoot && allCompanies.length > 0) {
-      carousels.push(new AccessibleCarousel(companiesRoot, {
+      new AccessibleCarousel(companiesRoot, {
         title: "עבודות עם חברות",
         items: allCompanies,
         showCompany: true
-      }));
+      });
     }
 
     if (socialRoot && window.MEDIA_DATA.social.length > 0) {
-      carousels.push(new AccessibleCarousel(socialRoot, {
+      new AccessibleCarousel(socialRoot, {
         title: "סושיאל",
         items: window.MEDIA_DATA.social,
         showCompany: false
-      }));
+      });
     }
 
     if (sketchesRoot && window.MEDIA_DATA.sketches && window.MEDIA_DATA.sketches.length > 0) {
-      carousels.push(new AccessibleCarousel(sketchesRoot, {
+      new AccessibleCarousel(sketchesRoot, {
         title: "סקיצות",
         items: window.MEDIA_DATA.sketches,
         showCompany: false
-      }));
+      });
     }
   }
 
