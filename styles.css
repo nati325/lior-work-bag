@@ -209,6 +209,7 @@ a {
 
 #companies-section,
 #social-section,
+#sketches-section,
 #contact-section {
   scroll-margin-top: calc(var(--nav-height) + 0.75rem);
 }
