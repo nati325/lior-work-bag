@@ -28,15 +28,13 @@
   }
 
   function primeVideoFrame(video) {
-    if (video.readyState >= 2) {
+    var src = video.getAttribute("data-src");
+
+    if (!src || video.getAttribute("src")) {
       return;
     }
 
-    video.preload = "auto";
-
-    if (video.getAttribute("src")) {
-      video.load();
-    }
+    video.src = src + "#t=0.001";
   }
 
   function showVideoPosterFrame(video) {
@@ -63,11 +61,11 @@
     if (item.type === "video") {
       var video = document.createElement("video");
       video.controls = true;
-      video.preload = "auto";
+      video.preload = "metadata";
       video.setAttribute("playsinline", "");
       video.className = "carousel-zoomable";
       video.setAttribute("aria-label", item.label + " – לחצו להגדלה או על כפתור ההפעלה כדי לצפות");
-      video.src = src;
+      video.setAttribute("data-src", src);
       video.addEventListener("loadeddata", function () {
         showVideoPosterFrame(video);
       });
@@ -75,9 +73,8 @@
     }
 
     var img = document.createElement("img");
-    img.src = src;
+    img.setAttribute("data-src", src);
     img.alt = item.label;
-    img.loading = "eager";
     img.decoding = "async";
     img.className = "carousel-zoomable";
     img.setAttribute("role", "button");
@@ -327,7 +324,17 @@
   };
 
   AccessibleCarousel.prototype.preloadMedia = function () {
-    this.slides.forEach(function (slide) {
+    this.preloadNeighbors(this.currentIndex);
+  };
+
+  AccessibleCarousel.prototype.preloadNeighbors = function (index) {
+    var offsets = [-1, 0, 1];
+    var total = this.items.length;
+    var self = this;
+
+    offsets.forEach(function (offset) {
+      var targetIndex = (index + offset + total) % total;
+      var slide = self.slides[targetIndex];
       var video = slide.querySelector("video");
       var img = slide.querySelector("img");
 
@@ -336,28 +343,8 @@
         showVideoPosterFrame(video);
       }
 
-      if (img) {
-        img.loading = "eager";
-        img.decoding = "sync";
-      }
-    });
-
-    this.preloadNeighbors(this.currentIndex);
-  };
-
-  AccessibleCarousel.prototype.preloadNeighbors = function (index) {
-    var offsets = [-1, 0, 1, 2];
-    var total = this.items.length;
-    var self = this;
-
-    offsets.forEach(function (offset) {
-      var targetIndex = (index + offset + total) % total;
-      var slide = self.slides[targetIndex];
-      var video = slide.querySelector("video");
-
-      if (video) {
-        primeVideoFrame(video);
-        showVideoPosterFrame(video);
+      if (img && !img.getAttribute("src")) {
+        img.src = img.getAttribute("data-src");
       }
     });
   };
