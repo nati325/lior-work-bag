@@ -90,6 +90,18 @@ window.MEDIA_DATA = {
       items: [
         { file: "הקבצים של ליאור/חברות/דורקס.jpeg", type: "image", label: "Durex – אין חשש לזיופים בקולות" }
       ]
+    },
+    {
+      name: "חופשות בחו״ל",
+      items: [
+        { file: "הקבצים של ליאור/חברות/מחוץ לארץ.jpeg", type: "image", label: "חופשות בחו״ל – מאיתנו, לא צריך לבקש סליחה" }
+      ]
+    },
+    {
+      name: "Pointer",
+      items: [
+        { file: "הקבצים של ליאור/חברות/פוינטר.jpeg", type: "image", label: "Pointer – שנהיה לראש ולא לגנב" }
+      ]
     }
   ],
   social: [
