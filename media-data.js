@@ -77,6 +77,19 @@ window.MEDIA_DATA = {
         { file: "להוססיף לעבודות ען חברות של ליאור/WhatsApp Image 2026-06-09 at 11.02.51 (2).jpeg", type: "image", label: "הכשרה – Best Invest" },
         { file: "להוססיף לעבודות ען חברות של ליאור/WhatsApp Image 2026-06-09 at 11.02.52.jpeg", type: "image", label: "הכשרה – ביטוח צד ג׳" }
       ]
+    },
+    {
+      name: "סטימצקי",
+      items: [
+        { file: "הקבצים של ליאור/חברות/סטימצקי א.jpeg", type: "image", label: "סטימצקי – הזמן עובר מהר כשקוראים" },
+        { file: "הקבצים של ליאור/חברות/סטימצקי ב.jpeg", type: "image", label: "סטימצקי – הזמן עובר מהר כשקוראים (2)" }
+      ]
+    },
+    {
+      name: "Durex",
+      items: [
+        { file: "הקבצים של ליאור/חברות/דורקס.jpeg", type: "image", label: "Durex – אין חשש לזיופים בקולות" }
+      ]
     }
   ],
   social: [
